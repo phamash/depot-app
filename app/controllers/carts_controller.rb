@@ -1,5 +1,5 @@
 class CartsController < ApplicationController
-  before_action :set_cart, only: [:show, :edit, :update, :destroy]
+ before_filter :set_cart, only: [:create]
 
   # GET /carts
   # GET /carts.json
@@ -24,15 +24,28 @@ class CartsController < ApplicationController
   # POST /carts
   # POST /carts.json
   def create
-    @cart = Cart.new(cart_params)
+    product = Product.find(params[:product_id])
 
+    @line_item = @cart.line_items.build
+
+    @line_item.product = product
     respond_to do |format|
       if @cart.save
-        format.html { redirect_to @cart, notice: 'Cart was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @cart }
+        format.html { redirect_to @line_item.cart,
+
+          notice: 'Line item was successfully created.' }
+
+        format.json { render json: @line_item,
+
+          status: :created, location: @line_item }
       else
-        format.html { render action: 'new' }
-        format.json { render json: @cart.errors, status: :unprocessable_entity }
+        format.html { redirect_to @line_item.cart,
+
+          notice: 'Line item was successfully created.' }
+
+        format.json { render json: @line_item,
+
+          status: :created, location: @line_item }
       end
     end
   end

@@ -1,5 +1,7 @@
- 
-
+.image_container img {
+  width: 260px;
+  height: 180px
+}
 .store {
 
   h1 {
@@ -71,6 +73,8 @@
       margin-top: 0.5em; 
 
       margin-bottom: 0.8em; 
+form, div {
+display: inline;
 
     }
 
